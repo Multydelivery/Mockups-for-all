@@ -74,7 +74,7 @@ export const MockupGrid = () => {
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [isHovered]);
+  }, [animate, isHovered]);
 
   return (
     <section className="mockup-grid">

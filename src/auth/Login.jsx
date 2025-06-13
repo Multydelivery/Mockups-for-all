@@ -23,12 +23,21 @@ const Login = () => {
       submitText="Sign In"
       onSubmit={handleSubmit}
     >
-      <Link className="login-link" to="/forgot-password">
-        <a>Forgot password?</a>
-      </Link>
-      <Link className="login-link" to="/signup">
-        <a>Don't have an account? Sign Up</a>
-      </Link>
+      {/* Replace anchor with button for accessibility */}
+      <button
+        type="button"
+        className="link-button"
+        onClick={() => navigate("/forgot-password")}
+      >
+        Forgot password?
+      </button>
+      <button
+        type="button"
+        className="link-button"
+        onClick={() => navigate("/signup")}
+      >
+        Don't have an account? Sign Up
+      </button>
     </AuthForm>
   );
 };
