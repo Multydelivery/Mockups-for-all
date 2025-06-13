@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/auth/AuthForm";
 import { useAuth } from "../hooks/useAuth";
 import "./Login.css"; // Import your CSS for styling

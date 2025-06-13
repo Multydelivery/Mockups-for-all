@@ -1,5 +1,5 @@
 // Components/MockupGrid.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './MockupGrid.css';
 
 const mockups = [
@@ -54,7 +54,7 @@ export const MockupGrid = () => {
   const requestRef = useRef();
   const animationSpeed = 1; // Adjust speed (lower = faster)
 
-  const animate = () => {
+  const animate = useCallback(() => {
     if (!isHovered) {
       setScrollPosition(prev => {
         const containerWidth = containerRef.current?.offsetWidth || 0;
@@ -69,12 +69,12 @@ export const MockupGrid = () => {
       });
     }
     requestRef.current = requestAnimationFrame(animate);
-  };
+  }, [animationSpeed, isHovered]);
 
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [animate, isHovered]);
+  }, [animate]);
 
   return (
     <section className="mockup-grid">
