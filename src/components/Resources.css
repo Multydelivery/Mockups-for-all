@@ -1,0 +1,230 @@
+/* Resources.css */
+.resources-section {
+  padding: 5rem 1rem;
+  background: white;
+  position: relative;
+}
+
+.resources-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+.resources-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #4CAF50;
+}
+
+.resources-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resource-card {
+  display: flex;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #eee;
+  text-decoration: none;
+  color: inherit;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-color: #4CAF50;
+}
+
+.resource-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+.resource-card:hover::before {
+  width: 8px;
+}
+
+.resource-icon {
+  font-size: 2rem;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.resource-content {
+  flex: 1;
+}
+
+.resource-category {
+  display: inline-block;
+  background: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.resource-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.resource-content p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.resource-arrow {
+  align-self: center;
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  color: #4CAF50;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.resource-card:hover .resource-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+.resources-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(76, 175, 80, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Category Color Variants */
+.resource-card[data-category="tutorial"]::before {
+  background: #2196F3;
+}
+.resource-card[data-category="tutorial"] .resource-category {
+  background: rgba(33, 150, 243, 0.1);
+  color: #2196F3;
+}
+.resource-card[data-category="tutorial"] .resource-arrow {
+  color: #2196F3;
+}
+
+.resource-card[data-category="assets"]::before {
+  background: #9C27B0;
+}
+.resource-card[data-category="assets"] .resource-category {
+  background: rgba(156, 39, 176, 0.1);
+  color: #9C27B0;
+}
+.resource-card[data-category="assets"] .resource-arrow {
+  color: #9C27B0;
+}
+
+.resource-card[data-category="learning"]::before {
+  background: #FF9800;
+}
+.resource-card[data-category="learning"] .resource-category {
+  background: rgba(255, 152, 0, 0.1);
+  color: #FF9800;
+}
+.resource-card[data-category="learning"] .resource-arrow {
+  color: #FF9800;
+}
+
+.resource-card[data-category="workflow"]::before {
+  background: #607D8B;
+}
+.resource-card[data-category="workflow"] .resource-category {
+  background: rgba(96, 125, 139, 0.1);
+  color: #607D8B;
+}
+.resource-card[data-category="workflow"] .resource-arrow {
+  color: #607D8B;
+}
+
+.resource-card[data-category="inspiration"]::before {
+  background: #E91E63;
+}
+.resource-card[data-category="inspiration"] .resource-category {
+  background: rgba(233, 30, 99, 0.1);
+  color: #E91E63;
+}
+.resource-card[data-category="inspiration"] .resource-arrow {
+  color: #E91E63;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .resources-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .resources-section {
+    padding: 3rem 1rem;
+  }
+  
+  .resources-header h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .resource-card {
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+  
+  .resource-icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .resource-arrow {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    margin: 0;
+  }
+}
