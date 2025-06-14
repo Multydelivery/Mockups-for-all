@@ -49,7 +49,6 @@ const mockups = [
 
 export const MockupGrid = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef(null);
   const scrollRef = useRef(null);
   const requestRef = useRef();
   const animationSpeed = 2; // Adjust scroll speed
@@ -71,7 +70,7 @@ export const MockupGrid = () => {
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [isHovered]);
+  }, [animate, isHovered]);
 
   const scrollByAmount = useCallback((amount) => {
     if (scrollRef.current) {
