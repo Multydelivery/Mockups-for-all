@@ -93,7 +93,9 @@ export const MockupGrid = () => {
           className="grid-container"
           style={{ 
             transform: `translateX(-${scrollPosition}px)`,
-            width: 'fit-content'
+            width: 'fit-content',
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
           }}
         >
           {/* Double the mockups for seamless looping */}
