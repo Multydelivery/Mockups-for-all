@@ -6,8 +6,6 @@
   overflow: hidden;
   width: 100%;
   box-sizing: border-box;
-  will-change: transform;
-  backface-visibility: hidden;
 }
 
 .section-header {
@@ -36,38 +34,43 @@
   margin: 0 auto;
 }
 
-/* MockupGrid.css */
-/* ... (keep your existing styles) ... */
-
 .slider-container {
   position: relative;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 0;
-  overflow: hidden;
 }
 
 .grid-container {
   display: flex;
   gap: 2rem;
-  will-change: transform;
-  transition: transform 0.1s linear;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  padding-bottom: 20px; /* Space for scrollbar */
+  margin-bottom: -20px; /* Compensate for padding */
+}
+
+.grid-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
 }
 
 .mockup-card {
-  flex: 0 0 280px; /* Fixed width for each card */
+  flex: 0 0 280px;
+  scroll-snap-align: start;
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ... (rest of your existing styles) ... */
-.mockup-card.active {
+.mockup-card:hover {
+  transform: translateY(-5px);
   box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-  z-index: 2;
 }
 
 .thumbnail {
@@ -108,7 +111,7 @@
   display: block;
 }
 
-.slider-arrow {
+.scroll-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -128,17 +131,29 @@
   border: 1px solid rgba(0,0,0,0.05);
 }
 
-.slider-arrow:hover {
+.scroll-button:hover {
   background: white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.slider-arrow.left {
+.scroll-button.left {
   left: 10px;
 }
 
-.slider-arrow.right {
+.scroll-button.right {
   right: 10px;
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .mockup-card:hover {
+    transform: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  
+  .scroll-button {
+    display: none; /* Hide buttons on touch devices */
+  }
 }
 
 /* Tablet responsiveness */
@@ -147,12 +162,8 @@
     padding: 4rem 1rem;
   }
   
-  .grid-container {
-    height: 380px;
-  }
-  
   .mockup-card {
-    width: 260px;
+    flex: 0 0 260px;
   }
   
   .thumbnail {
@@ -171,12 +182,8 @@
     padding: 0 0.5rem;
   }
   
-  .grid-container {
-    height: 340px;
-  }
-  
   .mockup-card {
-    width: 240px;
+    flex: 0 0 240px;
   }
   
   .thumbnail {
@@ -187,7 +194,7 @@
     padding: 1rem;
   }
   
-  .slider-arrow {
+  .scroll-button {
     width: 36px;
     height: 36px;
   }
@@ -199,12 +206,8 @@
     padding: 2.5rem 0.5rem;
   }
   
-  .grid-container {
-    height: 300px;
-  }
-  
   .mockup-card {
-    width: 220px;
+    flex: 0 0 220px;
   }
   
   .thumbnail {
@@ -215,7 +218,7 @@
     font-size: 1rem;
   }
   
-  .slider-arrow {
+  .scroll-button {
     width: 32px;
     height: 32px;
     font-size: 1rem;
@@ -225,7 +228,7 @@
 /* Extra small devices */
 @media (max-width: 360px) {
   .mockup-card {
-    width: 200px;
+    flex: 0 0 200px;
   }
   
   .thumbnail {

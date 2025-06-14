@@ -48,75 +48,91 @@ const mockups = [
 ];
 
 export const MockupGrid = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef(null);
+  const scrollRef = useRef(null);
   const requestRef = useRef();
-  const animationSpeed = 0.4; // Adjust speed (lower = faster)
+  const animationSpeed = 2; // Adjust scroll speed
 
-  const animate = useCallback(() => {
-    if (!isHovered) {
-      setScrollPosition(prev => {
-        const containerWidth = containerRef.current?.offsetWidth || 0;
-        const contentWidth = containerRef.current?.scrollWidth || 0;
-        const maxScroll = contentWidth - containerWidth;
-        
-        // Reset position when reaching end to create infinite loop
-        if (prev >= maxScroll) {
-          return 0;
-        }
-        return prev + animationSpeed;
-      });
+  // Auto-scroll animation
+  const animate = () => {
+    if (!isHovered && scrollRef.current) {
+      const container = scrollRef.current;
+      container.scrollLeft += animationSpeed;
+      
+      // Reset to start when reaching the end (for infinite loop)
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      }
     }
     requestRef.current = requestAnimationFrame(animate);
-  }, [animationSpeed, isHovered]);
+  };
 
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [animate]);
+  }, [isHovered]);
+
+  const scrollByAmount = (amount) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: amount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
-    <section className="mockup-grid">
-      <div className="section-header">
-        <h2>Popular <span className="highlight">Mockups</span></h2>
-        <p>Curated designs for your next project</p>
-      </div>
+    <div className="mockup-grid-container">
+      <button
+        className="scroll-button left"
+        onClick={() => scrollByAmount(-300)}
+      >
+        &#8592;
+      </button>
       
-      <div 
-        className="slider-container"
+      <div
+        ref={scrollRef}
+        className="scroll-container"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        ref={containerRef}
+        onTouchStart={() => setIsHovered(true)}
+        onTouchEnd={() => setIsHovered(false)}
       >
-        <div 
-          className="grid-container"
-          style={{ 
-            transform: `translateX(-${scrollPosition}px)`,
-            width: 'fit-content',
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
-          }}
-        >
-          {/* Double the mockups for seamless looping */}
-          {[...mockups, ...mockups].map((mockup, index) => (
-            <div 
-              key={`${mockup.id}-${index}`} 
-              className="mockup-card"
-            >
-              <div 
-                className="thumbnail" 
-                style={{ backgroundImage: `url(${mockup.thumbnail})` }} 
-              />
-              <div className="meta">
-                <span className="category">{mockup.category}</span>
-                <h3>{mockup.title}</h3>
-                <span className="downloads">{mockup.downloads.toLocaleString()} downloads</span>
-              </div>
+        <div className="section-header">
+          <h2>Popular <span className="highlight">Mockups</span></h2>
+          <p>Curated designs for your next project</p>
+        </div>
+        
+        <div className="grid-wrapper">
+          <div className="grid-content">
+            <div className="mockup-grid">
+              {mockups.map((mockup, idx) => (
+                <div key={mockup.id} className="mockup-card">
+                  <div 
+                    className="thumbnail" 
+                    style={{ backgroundImage: `url(${mockup.thumbnail})` }} 
+                  />
+                  <div className="meta">
+                    <span className="category">{mockup.category}</span>
+                    <h3>{mockup.title}</h3>
+                    <span className="downloads">
+                      {mockup.downloads.toLocaleString()} downloads
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
-    </section>
+      
+      <button
+        className="scroll-button right"
+        onClick={() => scrollByAmount(300)}
+      >
+        &#8594;
+      </button>
+    </div>
   );
 };
