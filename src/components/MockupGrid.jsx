@@ -59,18 +59,16 @@ export const MockupGrid = () => {
       const container = scrollRef.current;
       container.scrollLeft += animationSpeed;
       
-      // Reset to start when reaching the end (for infinite loop)
-      if (container.scrollLeft >= container.scrollWidth / 2) {
-        container.scrollLeft = 0;
+      if (container.scrollLeft >= container.scrollWidth / 2 - container.offsetWidth) {
+        container.scrollTo({
+          left: 0,
+          behavior: 'auto' // Instant reset for seamless loop
+        });
       }
     }
     requestRef.current = requestAnimationFrame(animate);
-  }, [isHovered, animationSpeed]);
+  }, [isHovered]);
 
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef.current);
-  }, [animate]);
 
   const scrollByAmount = useCallback((amount) => {
     if (scrollRef.current) {
