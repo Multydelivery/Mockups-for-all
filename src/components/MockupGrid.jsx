@@ -52,7 +52,7 @@ export const MockupGrid = () => {
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef(null);
   const requestRef = useRef();
-  const animationSpeed = 1; // Adjust speed (lower = faster)
+  const animationSpeed = 0.4; // Adjust speed (lower = faster)
 
   const animate = useCallback(() => {
     if (!isHovered) {
