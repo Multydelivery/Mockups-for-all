@@ -73,16 +73,21 @@ export const MockupGrid = () => {
     return () => cancelAnimationFrame(requestRef.current);
   }, [isHovered]);
 
-  const scrollByAmount = (amount) => {
+  const scrollByAmount = useCallback((amount) => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({
         left: amount,
         behavior: 'smooth'
       });
     }
-  };
+  }, []);
 
   return (
+    <>
+    <div className="mockup-header">
+      <h2>Popular <span className="highlight">Mockups</span></h2>
+      <p>Curated designs for your next project</p>
+    </div>
     <div className="mockup-grid-container">
       <button
         className="scroll-button left"
@@ -99,11 +104,7 @@ export const MockupGrid = () => {
         onTouchStart={() => setIsHovered(true)}
         onTouchEnd={() => setIsHovered(false)}
       >
-        <div className="section-header">
-          <h2>Popular <span className="highlight">Mockups</span></h2>
-          <p>Curated designs for your next project</p>
-        </div>
-        
+
         <div className="grid-wrapper">
           <div className="grid-content">
             <div className="mockup-grid">
@@ -134,5 +135,6 @@ export const MockupGrid = () => {
         &#8594;
       </button>
     </div>
+    </>
   );
 };
