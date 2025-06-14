@@ -54,7 +54,7 @@ export const MockupGrid = () => {
   const animationSpeed = 2; // Adjust scroll speed
 
   // Auto-scroll animation
-  const animate = () => {
+  const animate = useCallback(() => {
     if (!isHovered && scrollRef.current) {
       const container = scrollRef.current;
       container.scrollLeft += animationSpeed;
@@ -65,12 +65,12 @@ export const MockupGrid = () => {
       }
     }
     requestRef.current = requestAnimationFrame(animate);
-  };
+  }, [isHovered, animationSpeed]);
 
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [animate, isHovered]);
+  }, [animate]);
 
   const scrollByAmount = useCallback((amount) => {
     if (scrollRef.current) {
